@@ -1,0 +1,21 @@
+- name: Install packages
+  become: yes
+  hosts: all
+
+  tasks:
+    
+    - name: Install nginx
+      package:
+        name: nginx
+        state: latest
+
+    - name: Install mc
+      package:
+        name: mc
+        state: latest
+
+    - name: Install latest PostgreSQL
+      package:
+        name: postgresql
+        state: latest
+
