@@ -1,0 +1,41 @@
+- name: My Super Pooper Playbook
+  hosts: all
+  become: yes
+
+  vars:
+    msg1: "First message"
+    msg2: Hello
+    secret: JHGUIJOHKGUYIUOHJKGIYUHOJ
+
+  tasks:
+    
+    - name: Print secret text
+      debug:
+        var: secret
+  
+
+    - block:  # ===== Debian OS family =====
+    
+      - set_fact:
+          full_msg="{{ msg2 }} - {{ msg1 }} ({{ secret }})"
+
+      - debug:
+          var: full_msg
+      
+      when: ansible_os_family == "Debian"
+      # ===== END of Debian OS family =====
+
+
+    - block:  # ===== UNIX OS family =====
+
+      - debug:
+          var: ansible_distribution
+
+      - shell: uptime
+        register: server_uptime
+
+      - debug:
+          var: server_uptime.stdout
+      
+      when: ansible_os_family == "UNIX"
+      # ===== END of UNIX OS family =====
