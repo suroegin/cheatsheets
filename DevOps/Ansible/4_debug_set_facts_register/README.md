@@ -4,13 +4,13 @@
 
 Данная переменная служит для дебаггинга, вывода значений, содержащихся в переменных или просто сообщений.
 
-```cmd
+```yml
 - name: Print variable value
   debug:
     var: <variable_name>
 ```
 
-```cmd
+```yml
 - name: Print message
   debug:
     msg: "System {{ inventory_hostname }} has gateway {{ ansible_default_ipv4.gateway }}"
@@ -20,7 +20,7 @@
 
 Создает новую переменную с значением (фактом).
 
-```cmd
+```yml
 # Example setting host facts using key=value pairs, note that this always creates strings or booleans
 - set_fact: one_fact="something" other_fact="{{ local_var }}"
 
@@ -48,9 +48,7 @@
 
 Это нужно для того, чтобы вывести какой-то результат, который не отображается, например, после команды `-shell: uptime` мы получим информацию о том, что есть изменения, но не выведет какую-либо информацию. Поэтому этот результат мы регистрируем и с помощью `debug` сможем в любом случае посмотреть на содержимое результата.
 
-```cmd
-... playbook ...
-
+```yml
 - shell: uptime
   register: result
 
