@@ -1,0 +1,25 @@
+---
+- name: Loops Playbook
+  hosts: linux2
+  become: yes
+
+  tasks:
+    # - name: Say hello to ALL
+    #   debug:
+    #     msg: "Hello {{ item }}!"
+    #   loop:
+    #     - "Vasya"
+    #     - "Dmitry"
+    
+    - name: Update APT
+      shell: apt update
+      register: apt_update
+
+    - debug:
+        var: apt_update
+
+    - name: Install apps
+      apt: 
+        name: ['python-dev', 'python-pip', 'apache2'] 
+        state: present
+
