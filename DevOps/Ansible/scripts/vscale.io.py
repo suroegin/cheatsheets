@@ -1,13 +1,16 @@
+#!/usr/bin/env python3
+
 from os import environ, path, getenv
 import requests
 from dotenv import load_dotenv, find_dotenv
 from json import loads, dumps
 from time import time
 from pprint import pprint
+import argparse
 
 load_dotenv(find_dotenv())
-
 API_URL = "https://api.vscale.io/v1"
+
 
 def do_request(
     url: str = f'{API_URL}/scalets',
@@ -106,7 +109,35 @@ def delete_server(server_id: int = '', all: bool = False):
 
 if __name__ == "__main__":
 
-    # create_server(count=3)
+    arg_parser = argparse.ArgumentParser(description="Vscale.io CLI mini-app.")
+
+    
+
+    # \ Main command \
+    #  \ ------------ \
+    arg_parser.add_argument("-v", "--verbose", help="Print debug texts.", action="store_true")
+
+    # \ Sub-commands \
+    #  \ ------------ \
+    subparsers = arg_parser.add_subparsers(help='sub-commands for specific actions')
+
+    # [>] Create sub-command
+    create_parser = subparsers.add_parser("create", help="Create sub-command")
+
+    #    - Create
+    create_parser.add_argument("-s", "--server", help='string JSON data')
+
+    # [>] Delete sub-command
+    delete_parser = subparsers.add_parser("delete", help="delete sub-command")
+
+    #    - Delete
+    delete_parser.add_argument("-s", "--server", help="delete server", nargs="*")
+    
+    args = arg_parser.parse_args()
+    print(args)
+    
+
+    # create_server(count=1)
     
     # print(
         # server_list(ip_only=True)
@@ -114,4 +145,10 @@ if __name__ == "__main__":
     
     # ssh_keys()
     
-    delete_server(all=True)
+    # if args.delete:
+    #     if args.delete == "all":
+    #         delete_server(all=True)
+    #     else:
+    #         pass
+
+    if 
